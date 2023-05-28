@@ -9,8 +9,11 @@ I have developed a handy map application with the following requirements:
 3. Display the searched location on a map and add a marker each time the location changes.
 
 4. Create a table with pagination to present all searched places:
+    
     a) Display a maximum of 10 records per page.
+    
     b) Include a checkbox at the beginning of each row to enable users to select multiple records simultaneously.
+    
     c) Provide a delete button at the top to remove all selected records and their corresponding markers from the map.
 
 5. Show the time zone and local time of the most recent searched location.
