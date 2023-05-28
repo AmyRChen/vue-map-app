@@ -126,7 +126,8 @@ export default {
     },
     getTimeZoneAndCurrentTime(latitude, longitude) {
       const timestamp = Math.floor(Date.now() / 1000);
-      const apiEndpoint = `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${timestamp}&key=AIzaSyB94SJ-dNFOIwtba1duGA2F9buYg4L5-Wc`;
+      const apiKey= process.env.VUE_APP_API_KEY;
+      const apiEndpoint = `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${timestamp}&key=${apiKey}`;
 
       fetch(apiEndpoint)
         .then(response => response.json())
