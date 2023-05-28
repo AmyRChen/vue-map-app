@@ -54,7 +54,7 @@ export default {
     };
   },
   mounted() {
-    this.initializeMap();
+    this.loadGoogleMapsScript();
   },
   computed: {
     hasSearchedLocations() {
@@ -62,14 +62,26 @@ export default {
     },
   },
   methods: {
-    initializeMap() {
-      // Initialize the map with a default location
-      const defaultLocation = { lat: 43.651070, lng: -79.347015 }; // Toronto coordinates
-      const mapOptions = {
-        center: defaultLocation,
-        zoom: 12,
+    loadGoogleMapsScript() {
+      const apiKey = process.env.VUE_APP_API_KEY;
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initializeMap`;
+      script.defer = true;
+
+      document.body.appendChild(script);
+
+      window.initializeMap = () => {
+        const defaultLocation = { lat: 43.651070, lng: -79.347015 }; // Toronto coordinates
+        const mapOptions = {
+          center: defaultLocation,
+          zoom: 12,
+        };
+        this.map = new google.maps.Map(this.$refs.map, mapOptions);
       };
-      this.map = new google.maps.Map(this.$refs.map, mapOptions);
+
+      script.addEventListener('error', () => {
+        console.log('Error loading Google Maps API.');
+      });
     },
     getCurrentLocation() {
       // Acquire the user's current location
