@@ -1,3 +1,4 @@
+# Vue Map App
 Hello! This is my first Vue application, and I'm delighted to share my learning journey. It took me some time to grasp the syntax and understand the differences between Vue and React, but learning is always a joyful experience.
 
 I have developed a handy map application with the following requirements:
