@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="delete-button" @click="deleteSelectedHistory">Delete Selected History</button>
+    <button class="button" @click="deleteSelectedHistory">Delete</button>
     <table>
       <thead>
         <tr>
@@ -18,15 +18,15 @@
           <td>
             <input type="checkbox" v-model="selectedLocations" :value="location" />
           </td>
-          <td>{{ location }}</td>
-        </tr>
+          <td><span class="highlight">{{ location }}</span></td>
+        </tr> 
       </tbody>
     </table>
 
     <div class="pagination">
-      <button @click="previousPage">Previous</button>
-      <span>{{ currentPage }}/{{ totalPages }}</span>
-      <button @click="nextPage">Next</button>
+      <button @click="previousPage" class="button">&lt;</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button @click="nextPage" class="button">&gt;</button>
     </div>
   </div>
 </template>
@@ -83,15 +83,15 @@ export default {
 
 <style scoped>
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 10px;
+  width: 80%;
+  margin: 0 auto;
 }
 
 th,
 td {
   padding: 8px;
   border-bottom: 1px solid #ddd;
+  color:#1fa0aa;
 }
 
 .pagination {
@@ -99,9 +99,11 @@ td {
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+  color: #0c947c;
 }
 
 .pagination button {
   margin: 0 5px;
 }
+
 </style>

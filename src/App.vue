@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <h4>Accuenergy - Pre-Interview Code test</h4>
+    <h1 class="title">Accuenergy </h1>
+    <h2 class="title">Pre-Interview Coding Test</h2>
     <MyMap/>
   </div>
 </template>
@@ -19,6 +20,10 @@ export default {
 <style>
 #app {
   text-align: center;
-  padding: 20px;
+  padding: 20px 0;
+}
+
+.title{
+  color: #0c947c;
 }
 </style>

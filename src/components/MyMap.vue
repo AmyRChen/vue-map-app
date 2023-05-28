@@ -1,6 +1,9 @@
 <template>
   <div>
     <button class="button" @click="getCurrentLocation">Get Current Location</button>
+    <div class="current-address" v-if="currentAddress">
+      Current Address: {{ currentAddress }}
+    </div>
     <div class="search-container">
       Search a location:
       <input
@@ -14,11 +17,12 @@
       <button class="button" @click="searchLocation">Search</button>
     </div>
     <div class="time-zone">
-      The latest searched location: {{ latestSearchedLocation }} ({{ timeZone }})
-      | Current Time: {{ currentTime }}
+      The latest searched location: <span class="highlight">{{ latestSearchedLocation }}</span> (<span class="highlight">{{ timeZone }}</span>)
+      | Current Time: <span class="highlight">{{ currentTime }}</span>
     </div>
-
-    <div ref="map" class="map"></div>
+    <div class="map-container">
+      <div ref="map" class="map"></div>
+    </div>
     <!--listen for the delete-selected event emitted by LocationTable.vue -->
     <location-table
       :locations="searchedLocations"
@@ -46,6 +50,7 @@ export default {
       timeZone: 'UTC', // Initialize with a default time zone
       currentTime: '',
       intervalId: null, // variable to store the interval ID
+      currentAddress:'',
     };
   },
   mounted() {
@@ -76,6 +81,16 @@ export default {
             this.map.setCenter(currentLocation);
             const marker = new google.maps.Marker({ position: currentLocation, map: this.map });
             this.markerMap.set('currentLocation', marker);
+
+            // Get the current address using Geocoding
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ location: currentLocation }, (results, status) => {
+              if (status === 'OK' && results[0]) {
+                this.currentAddress = results[0].formatted_address;
+              } else {
+                console.log('Geocode was not successful for the following reason:', status);
+              }
+            });
           },
           error => {
             console.log('Error retrieving location:', error);
@@ -169,15 +184,20 @@ export default {
 </script>
 
 
-<style scoped>
+<style >
+.map-container {
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+  overflow: hidden; /* Prevents both horizontal and vertical scrolling */
+}
 .map {
   width: 100%;
-  height: 400px;
+  height: 100%;
 }
 
 .button{
-  margin-bottom: 10px;
-  margin-left: 10px;
+  margin: 20px 10px;
   display: inline-block;
   outline: none;
   cursor: pointer;
@@ -186,11 +206,11 @@ export default {
   line-height: 20px;
   height: 30px;
   max-height: 30px;
-  background: #fff;
+  background: #f0fbfa;
   font-weight: 700;
-  border: 2px solid #DAE3F3;
-  border-radius: 0;
-  color: #272C34;
+  border: 2px solid #8ad7de;
+  border-radius: 15px;
+  color: #1fa0aa;
   transition-timing-function: ease-in-out;
   transition-property: box-shadow;
   transition-duration: 150ms;
@@ -202,5 +222,19 @@ export default {
 
 .search-input{
   margin-left: 5px;
+}
+
+.time-zone{
+  margin: 25px 0;
+  color: #1fa0aa;
+}
+
+.search-container{
+  margin: 25px 0;
+  color: #1fa0aa;
+}
+
+.highlight{
+  color:#ea9c3d;
 }
 </style>
