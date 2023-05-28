@@ -126,7 +126,7 @@ export default {
     },
     getTimeZoneAndCurrentTime(latitude, longitude) {
       const timestamp = Math.floor(Date.now() / 1000);
-      const apiEndpoint = `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${timestamp}&key=AIzaSyB94SJ-dNFOIwtba1duGA2F9buYg4L5-Wc`;
+      const apiEndpoint = `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${timestamp}&key=${process.env.MAP_API_KEY}`;
 
       fetch(apiEndpoint)
         .then(response => response.json())
@@ -189,7 +189,6 @@ export default {
   width: 80%;
   height: 500px;
   margin: 0 auto;
-  overflow: hidden; /* Prevents both horizontal and vertical scrolling */
 }
 .map {
   width: 100%;
